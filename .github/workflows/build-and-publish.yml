@@ -47,4 +47,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: packages
-          path: .dist/
+          path: ./.dist/*.tgz
+          include-hidden-files: true
