@@ -1,4 +1,5 @@
-/.dist
+/.dist/
+/.work/
 
 # .NET specific ignores
 bin/
@@ -19,3 +20,5 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+!/npm-module/bin

@@ -1,0 +1,40 @@
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    name: Run build.ps1 and publish.ps1 on macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install PowerShell
+        run: |
+          brew install --cask powershell
+
+      - name: Run build.ps1
+        shell: pwsh
+        run: |
+          pwsh ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "Beta.{0}"', github.run_number) || '' }}
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish
+
+      # attach tarballs to release
+    - name: Upload tarballs to release
+      if: github.event_name == 'release'
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+      run: gh release upload "${{ github.release.tag_name }}" "./dist/*.tgz"

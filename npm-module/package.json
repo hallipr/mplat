@@ -1,0 +1,14 @@
+{
+  "name": "@hallipr/mplat",
+  "version": "1.0.5",
+  "description": "A simple npm package",
+  "main": "mplat.js",
+  "bin": {
+    "mplat": "bin/mplat.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "optionalDependencies": {   
+  }
+}
