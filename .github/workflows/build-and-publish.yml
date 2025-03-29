@@ -10,7 +10,11 @@ on:
 jobs:
   build-and-publish:
     name: Run build.ps1 and publish.ps1 on macOS
+
     runs-on: macos-latest
+    
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
@@ -30,21 +34,22 @@ jobs:
         run: |
           ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "beta.{0}"', github.run_number) || '' }}
 
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          ./publish.ps1
-
-      - name: Upload packages to release
-        uses: softprops/action-gh-release@v2
-        if: github.event_name == 'release'
-        with:
-          files: ./.dist/*.tgz
-
       - name: Upload packages to workflow run
         uses: actions/upload-artifact@v4
         with:
           name: packages
           path: ./.dist/*.tgz
           include-hidden-files: true
+
+      - name: Upload packages to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release upload "${{ github.event.release.tag_name }}" "./.dist/*.tgz"
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          ./publish.ps1
