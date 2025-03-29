@@ -40,7 +40,7 @@ jobs:
           if ('${{ github.event_name }}' -eq 'push') {
             $version = "$version-beta.${{ github.run_number }}"
           }
-          "version=$version" >> '$GITHUB_OUTPUT'
+          "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Run build.ps1
         shell: pwsh
