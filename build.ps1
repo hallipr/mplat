@@ -1,16 +1,16 @@
 #!/usr/bin/env pwsh
 
 param(
-    [string] $PreRelease
+    [string] $Version
 )
 
 $ErrorActionPreference = "Stop"
 $repoRoot = Resolve-Path "$PSScriptRoot"
 
-$Version = (node -p "require('./npm-module/package.json').version")
-
-if ($PreRelease) {
-    $Version = $Version + "-$PreRelease"
+if (!$Version) {
+    # get the number of commits since the last tag
+    $baseVersion = (node -p "require('./npm-module/package.json').version")
+    $Version = "$baseVersion-alpha"
 }
 
 Push-Location "$repoRoot/dotnet"
@@ -48,23 +48,25 @@ try {
             -c Release `
             -o $outputDir
         
-        chmod +x "$outputDir/mplat-cli$extension"
+        if (!$IsWindows) {
+            chmod +x "$outputDir/mplat-cli$extension"
+        }
 
         # create a package.json in the output directory with a bin entry for the executable
         $packageJson = [ordered]@{
-            name = "@hallipr/mplat-$node_os-$arch"
-            version = $Version
-            description = "A .NET application"
-            os = $node_os
-            arch = $arch
+            name              = "@hallipr/mplat-$node_os-$arch"
+            version           = $Version
+            description       = "A .NET application"
+            os                = $node_os
+            arch              = $arch
             'directories.bin' = 'bin'
         }
         
         $packageFolder = "$repoRoot/.work/$node_os-$arch"
 
         $packageJson
-          | ConvertTo-Json -Depth 10
-          | Out-File -FilePath "$packageFolder/package.json" -Encoding utf8
+        | ConvertTo-Json -Depth 10
+        | Out-File -FilePath "$packageFolder/package.json" -Encoding utf8
 
         Write-Host "Created package.json in $packageFolder"
 
@@ -77,7 +79,11 @@ try {
     $wrapperFolder = "$repoRoot/.work/mplat"
     New-Item -ItemType Directory $wrapperFolder | Out-Null
     Copy-Item -Path "$repoRoot/npm-module/*" -Destination $wrapperFolder -Recurse -Force
-    chmod +x "$wrapperFolder/bin/mplat.js"
+
+    if (!$IsWindows) {
+        chmod +x "$wrapperFolder/bin/mplat.js"
+    }
+
     $wrapperPackageJson | ConvertTo-Json -Depth 10 | Out-File -FilePath "$wrapperFolder/package.json" -Encoding utf8
     Write-Host "Created package.json in $wrapperFolder"
 
