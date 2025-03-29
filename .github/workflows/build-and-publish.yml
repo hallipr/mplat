@@ -37,11 +37,10 @@ jobs:
           ./publish.ps1
 
       - name: Upload packages to release
+        uses: softprops/action-gh-release@v2
         if: github.event_name == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: gh release upload "${{ github.event.release.tag_name }}" "./.dist/*.tgz"
+        with:
+          files: ./.dist/*.tgz
 
       - name: Upload packages to workflow run
         uses: actions/upload-artifact@v4
