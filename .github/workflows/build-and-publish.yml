@@ -23,13 +23,13 @@ jobs:
       - name: Run build.ps1
         shell: pwsh
         run: |
-          pwsh ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "Beta.{0}"', github.run_number) || '' }}
+          ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "Beta.{0}"', github.run_number) || '' }}
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm publish
+          ./publish.ps1
 
       # attach tarballs to release
       - name: Upload tarballs to release

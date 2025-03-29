@@ -22,9 +22,9 @@ try {
 
     $platforms = @(
         @{ os = "linux"; arch = "x64" },
-        # @{ os = "linux"; arch = "arm64" },
-        # @{ os = "osx"; arch = "x64"; node_os = "darwin" },
-        # @{ os = "osx"; arch = "arm64"; node_os = "darwin" },
+        @{ os = "linux"; arch = "arm64" },
+        @{ os = "osx"; arch = "x64"; node_os = "darwin" },
+        @{ os = "osx"; arch = "arm64"; node_os = "darwin" },
         @{ os = "win"; arch = "x64"; node_os = "win32" }
     )
 

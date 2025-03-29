@@ -3,10 +3,8 @@
 $ErrorActionPreference = "Stop"
 $repoRoot = Resolve-Path "$PSScriptRoot"
 
-Push-Location "$repoRoot/dotnet"
+Push-Location $repoRoot
 try {
-    $version = "1.0.0"
-
     $packages = Get-ChildItem -Path "$repoRoot/.dist" -Filter "*.tgz"
 
     foreach ($package in $packages) {
