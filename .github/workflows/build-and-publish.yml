@@ -41,7 +41,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: gh release upload "${{ github.release.tag_name }}" "./.dist/*.tgz"
+        run: gh release upload "${{ github.event.release.tag_name }}" "./.dist/*.tgz"
 
       - name: Upload packages to workflow run
         uses: actions/upload-artifact@v4
