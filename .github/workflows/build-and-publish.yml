@@ -32,9 +32,9 @@ jobs:
           npm publish
 
       # attach tarballs to release
-    - name: Upload tarballs to release
-      if: github.event_name == 'release'
-      env:
-        GH_TOKEN: ${{ github.token }}
-        GH_REPO: ${{ github.repository }}
-      run: gh release upload "${{ github.release.tag_name }}" "./dist/*.tgz"
+      - name: Upload tarballs to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release upload "${{ github.release.tag_name }}" "./dist/*.tgz"
