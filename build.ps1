@@ -68,6 +68,7 @@ try {
 
         Write-Host "Created package.json in $packageFolder"
 
+        Write-Host "Packaging $packageFolder into $repoRoot/.dist"
         npm pack $packageFolder --pack-destination "$repoRoot/.dist"
 
         $wrapperPackageJson.optionalDependencies["@hallipr/mplat-$node_os-$arch"] = $version
@@ -80,6 +81,7 @@ try {
     $wrapperPackageJson | ConvertTo-Json -Depth 10 | Out-File -FilePath "$wrapperFolder/package.json" -Encoding utf8
     Write-Host "Created package.json in $wrapperFolder"
 
+    Write-Host "Packaging $wrapperFolder into $repoRoot/.dist"
     npm pack $wrapperFolder --pack-destination "$repoRoot/.dist"
 }
 finally {
