@@ -89,7 +89,7 @@ jobs:
         shell: pwsh
         run: |
           $version = $env:mplat_version
-          npx "@halipr/mplat@$version" some test string
+          npx "@hallipr/mplat@$version" some test string
 
-          npm install -g "@halipr/mplat@$version"
+          npm install -g "@hallipr/mplat@$version"
           mplat some test string
