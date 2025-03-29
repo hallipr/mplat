@@ -9,7 +9,6 @@ obj/
 *.userosscache
 *.sln.docstates
 *.vs/
-.vscode/
 project.lock.json
 project.fragment.lock.json
 artifacts/

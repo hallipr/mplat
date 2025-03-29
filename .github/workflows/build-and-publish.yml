@@ -12,7 +12,7 @@ jobs:
     name: Run build.ps1 and publish.ps1 on macOS
 
     runs-on: macos-latest
-    
+
     permissions:
       contents: write
 
@@ -38,9 +38,9 @@ jobs:
         run: |
           $version = node -p "require('./npm-module/package.json').version"
           if ('${{ github.event_name }}' -eq 'push') {
-            $version = $version + '-beta.' + '${{ github.run_number }}'          
+            $version = "$version-beta.${{ github.run_number }}"
           }
-          "version=$version" >> '$GITHUB_OUTPUT' 
+          "version=$version" >> '$GITHUB_OUTPUT'
 
       - name: Run build.ps1
         shell: pwsh
@@ -85,7 +85,7 @@ jobs:
 
       - name: Install mplat
         env:
-            mplat_version: ${{needs.build.outputs.version}}
+          mplat_version: ${{needs.build.outputs.version}}
         shell: pwsh
         run: |
           $version = $env:mplat_version
