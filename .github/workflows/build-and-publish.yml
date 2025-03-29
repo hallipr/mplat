@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-          
+
       - name: Install PowerShell
         run: |
           brew install --cask powershell
@@ -36,10 +36,15 @@ jobs:
         run: |
           ./publish.ps1
 
-      # attach tarballs to release
-      - name: Upload tarballs to release
+      - name: Upload packages to release
         if: github.event_name == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: gh release upload "${{ github.release.tag_name }}" "./dist/*.tgz"
+
+      - name: Upload packages to workflow run
+        uses: actions/upload-artifact@v3
+        with:
+          name: packages
+          path: ./dist/*.tgz

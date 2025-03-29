@@ -2,7 +2,7 @@
   "name": "@hallipr/mplat",
   "version": "1.0.5",
   "description": "A simple npm package",
-  "main": "mplat.js",
+  "main": "bin/mplat.js",
   "bin": {
     "mplat": "bin/mplat.js"
   },
