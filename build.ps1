@@ -76,6 +76,7 @@ try {
     $wrapperFolder = "$repoRoot/.work/mplat"
     New-Item -ItemType Directory $wrapperFolder | Out-Null
     Copy-Item -Path "$repoRoot/npm-module/*" -Destination $wrapperFolder -Recurse -Force
+    chmod +x "$wrapperFolder/bin/mplat.js"
     $wrapperPackageJson | ConvertTo-Json -Depth 10 | Out-File -FilePath "$wrapperFolder/package.json" -Encoding utf8
     Write-Host "Created package.json in $wrapperFolder"
 

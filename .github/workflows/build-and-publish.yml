@@ -16,6 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          
       - name: Install PowerShell
         run: |
           brew install --cask powershell
@@ -23,7 +28,7 @@ jobs:
       - name: Run build.ps1
         shell: pwsh
         run: |
-          ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "Beta.{0}"', github.run_number) || '' }}
+          ./build.ps1 ${{ github.event_name == 'push' && format('-PreRelease "beta.{0}"', github.run_number) || '' }}
 
       - name: Publish to npm
         env:
