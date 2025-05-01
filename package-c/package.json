@@ -1,0 +1,9 @@
+{
+  "name": "@hallipr/package-c",
+  "version": "0.1.0",
+  "description": "A simple npm package",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

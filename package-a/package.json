@@ -1,0 +1,15 @@
+{
+  "name": "@hallipr/package-a",
+  "version": "0.1.0",
+  "description": "A simple npm package",
+  "main": "index.js",
+  "bin": {
+    "package-a": "index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@hallipr/package-b": "^0.1.0"
+  }
+}

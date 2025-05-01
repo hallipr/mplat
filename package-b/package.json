@@ -1,0 +1,12 @@
+{
+  "name": "@hallipr/package-b",
+  "version": "0.1.0",
+  "description": "A simple npm package",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "@hallipr/package-c": "^0.1.0"
+  }
+}
